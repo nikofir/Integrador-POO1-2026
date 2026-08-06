@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.veterinaria.controller.VacunaController" styleClass="vista">
+    <top>
+        <VBox spacing="10">
+            <Label styleClass="titulo" text="Vacunas"/>
+            <HBox spacing="10">
+                <Button text="Recargar" onAction="#recargar"/>
+            </HBox>
+        </VBox>
+    </top>
+    <center>
+        <TableView fx:id="tabla" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colNombreComercial" text="Nombre comercial"/>
+                <TableColumn fx:id="colEnfermedad" text="Enfermedad prevenida"/>
+                <TableColumn fx:id="colPeriodicidad" text="Periodicidad (meses)"/>
+            </columns>
+        </TableView>
+    </center>
+    <bottom>
+        <HBox spacing="10" styleClass="barra-acciones">
+            <Button text="Nueva vacuna" onAction="#nuevaVacuna" styleClass="boton-primario"/>
+        </HBox>
+    </bottom>
+    <padding>
+        <Insets top="16" right="16" bottom="16" left="16"/>
+    </padding>
+</BorderPane>

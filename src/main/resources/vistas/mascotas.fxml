@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.veterinaria.controller.MascotaController" styleClass="vista">
+    <top>
+        <VBox spacing="10">
+            <Label styleClass="titulo" text="Mascotas"/>
+            <HBox spacing="10">
+                <ComboBox fx:id="comboCliente" promptText="Todas las activas"/>
+                <Button text="Recargar" onAction="#recargar"/>
+            </HBox>
+        </VBox>
+    </top>
+    <center>
+        <TableView fx:id="tabla" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colFicha" text="Ficha"/>
+                <TableColumn fx:id="colEspecie" text="Especie"/>
+                <TableColumn fx:id="colNombre" text="Nombre"/>
+                <TableColumn fx:id="colRaza" text="Raza"/>
+                <TableColumn fx:id="colEdad" text="Edad (anios)"/>
+                <TableColumn fx:id="colCliente" text="Cliente"/>
+                <TableColumn fx:id="colActiva" text="Activa"/>
+            </columns>
+        </TableView>
+    </center>
+    <bottom>
+        <HBox spacing="10" styleClass="barra-acciones">
+            <Button text="Nueva mascota" onAction="#nuevaMascota" styleClass="boton-primario"/>
+            <Button text="Modificar" onAction="#modificarMascota"/>
+            <Button text="Activar / Inactivar" onAction="#alternarEstado"/>
+        </HBox>
+    </bottom>
+    <padding>
+        <Insets top="16" right="16" bottom="16" left="16"/>
+    </padding>
+</BorderPane>

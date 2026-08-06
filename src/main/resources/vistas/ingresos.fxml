@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.veterinaria.controller.IngresosController" styleClass="vista">
+    <top>
+        <VBox spacing="10">
+            <Label styleClass="titulo" text="Ingresos"/>
+            <HBox spacing="10">
+                <DatePicker fx:id="campoDesde" editable="false"/>
+                <Label text="hasta"/>
+                <DatePicker fx:id="campoHasta" editable="false"/>
+                <Button text="Calcular" onAction="#calcular" styleClass="boton-primario"/>
+                <Label fx:id="etiquetaTotal" styleClass="total-ingresos"/>
+            </HBox>
+        </VBox>
+    </top>
+    <center>
+        <TableView fx:id="tabla" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colFecha" text="Fecha"/>
+                <TableColumn fx:id="colMascota" text="Mascota"/>
+                <TableColumn fx:id="colCliente" text="Cliente"/>
+                <TableColumn fx:id="colServicios" text="Servicios"/>
+                <TableColumn fx:id="colTotal" text="Total"/>
+            </columns>
+        </TableView>
+    </center>
+    <padding>
+        <Insets top="16" right="16" bottom="16" left="16"/>
+    </padding>
+</BorderPane>

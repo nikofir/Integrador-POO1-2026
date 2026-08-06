@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.veterinaria.controller.MainController" styleClass="fondo-principal">
+    <left>
+        <VBox styleClass="menu" spacing="6" prefWidth="210" prefHeight="Infinity">
+            <Label styleClass="menu-titulo" text="VETERINARIA"/>
+            <Label styleClass="menu-subtitulo" text="Sistema de gestion"/>
+            <Button styleClass="menu-boton" text="Clientes" maxWidth="Infinity" onAction="#mostrarClientes"/>
+            <Button styleClass="menu-boton" text="Mascotas" maxWidth="Infinity" onAction="#mostrarMascotas"/>
+            <Button styleClass="menu-boton" text="Veterinarios" maxWidth="Infinity" onAction="#mostrarVeterinarios"/>
+            <Button styleClass="menu-boton" text="Servicios" maxWidth="Infinity" onAction="#mostrarServicios"/>
+            <Button styleClass="menu-boton" text="Vacunas" maxWidth="Infinity" onAction="#mostrarVacunas"/>
+            <Button styleClass="menu-boton" text="Turnos" maxWidth="Infinity" onAction="#mostrarTurnos"/>
+            <Button styleClass="menu-boton" text="Ingresos" maxWidth="Infinity" onAction="#mostrarIngresos"/>
+        </VBox>
+    </left>
+    <center>
+        <StackPane fx:id="contenido"/>
+    </center>
+</BorderPane>

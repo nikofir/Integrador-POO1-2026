@@ -1,0 +1,178 @@
+%% ============================================================
+%% Sistema de Gestion Veterinaria - Diagrama de clases (Mermaid)
+%% Render en https://mermaid.live
+%% ============================================================
+
+classDiagram
+    direction LR
+
+    class Cliente {
+        -Long id
+        -String dni
+        -String nombre
+        -String apellido
+        -String telefono
+        -String email
+        -String domicilio
+        +crear(dni, nombre, apellido, telefono, email, domicilio) Cliente
+        +actualizarDatos(nombre, apellido, telefono, email, domicilio)
+        +agregarMascota(mascota)
+        +removerMascota(mascota)
+        +getNombreCompleto() String
+    }
+
+    class Mascota {
+        -Long id
+        -String ficha
+        -Especie especie
+        -String nombre
+        -String raza
+        -LocalDate fechaNacimiento
+        -boolean activa
+        +crear(cliente, especie, nombre, raza, fechaNacimiento, ficha) Mascota
+        +actualizarDatos(especie, nombre, raza, fechaNacimiento)
+        +marcarInactiva()
+        +reactivar()
+        +getEdadAnios() long
+    }
+
+    class Especie {
+        <<enumeration>>
+        PERRO
+        GATO
+        AVE
+        ROEDOR
+        REPTIL
+        OTRO
+        +porEtiqueta(etiqueta) Especie
+    }
+
+    class Veterinario {
+        -Long id
+        -String matricula
+        -String nombre
+        -String apellido
+        +crear(matricula, nombre, apellido, especialidades) Veterinario
+        +actualizarDatos(nombre, apellido)
+        +agregarEspecialidad(especialidad)
+        +removerEspecialidad(especialidad)
+        +getNombreCompleto() String
+    }
+
+    class Especialidad {
+        <<enumeration>>
+        CLINICA_GENERAL
+        CARDIOLOGIA
+        CIRUGIA
+        DERMATOLOGIA
+        NUTRICION
+        ODONTOLOGIA
+        OFTALMOLOGIA
+        TRAUMATOLOGIA
+        COMPORTAMIENTO
+    }
+
+    class Servicio {
+        <<abstract>>
+        -Long id
+        -String nombre
+        -BigDecimal precioBase
+        -int duracionMinutos
+        +actualizarDatos(nombre, precioBase, duracionMinutos)
+        +getTipo() String
+    }
+
+    class ConsultaMedica
+    class Peluqueria
+    class GuarderiaDia {
+        -int cupoMaximo
+        +crear(nombre, precioBase, duracionMinutos, cupoMaximo) GuarderiaDia
+        +actualizarCupo(cupoMaximo)
+        +validarCupoDisponible(turnosOcupados)
+    }
+    class AplicacionVacuna {
+        +crear(nombre, precioBase, duracionMinutos, vacuna) AplicacionVacuna
+    }
+
+    class Vacuna {
+        -Long id
+        -String nombreComercial
+        -String enfermedadPrevenida
+        -int periodicidadMeses
+        +crear(nombreComercial, enfermedadPrevenida, periodicidadMeses) Vacuna
+        +estaVigente(fechaUltimaAplicacion, fechaTurno) boolean
+    }
+
+    class Turno {
+        -Long id
+        -LocalDateTime fechaHora
+        -LocalDateTime fechaCreacion
+        -EstadoTurno estado
+        +crear(mascota, veterinario, fechaHora, servicios) Turno
+        +confirmar()
+        +atender()
+        +cancelar(momento)
+        +agregarServicio(servicio)
+        +quitarServicio(turnoServicio)
+        +registrarRegistroMedico(turnoServicio, registroMedico)
+        +calcularPrecioTotal() BigDecimal
+        +calcularDuracionTotal() int
+    }
+
+    class TurnoServicio {
+        -Long id
+        -BigDecimal precioHistorico
+        +crear(turno, servicio) TurnoServicio
+        +asignarRegistroMedico(registroMedico)
+        +tieneRegistroMedico() boolean
+    }
+
+    class RegistroMedico {
+        -Long id
+        -String diagnostico
+        -String tratamiento
+        -LocalDateTime fecha
+        +crear(diagnostico, tratamiento) RegistroMedico
+    }
+
+    class EstadoTurno {
+        <<enumeration>>
+        PENDIENTE
+        CONFIRMADO
+        ATENDIDO
+        CANCELADO
+    }
+
+    Cliente "1" o-- "0..*" Mascota : composicion
+    Mascota "*" -- "1" Cliente
+    Mascota --> Especie
+    Veterinario --> Especialidad : tiene 1..*
+    Servicio <|-- ConsultaMedica
+    Servicio <|-- Peluqueria
+    Servicio <|-- GuarderiaDia
+    Servicio <|-- AplicacionVacuna
+    AplicacionVacuna "*" --> "1" Vacuna
+    Turno "1" *-- "0..*" TurnoServicio : composicion
+    Turno "*" --> "1" Mascota
+    Turno "*" --> "1" Veterinario
+    Turno --> EstadoTurno
+    TurnoServicio "*" --> "1" Servicio
+    TurnoServicio "1" --> "0..1" RegistroMedico
+
+    %% --- Capa de servicios de negocio ---
+    class ClienteService
+    class MascotaService
+    class VeterinarioService
+    class VacunaService
+    class ServicioService
+    class TurnoService
+
+    class TurnoService {
+        +crearTurno(mascotaId, veterinarioId, fechaHora, serviciosIds)
+        +confirmar(id)
+        +atender(id)
+        +cancelar(id, momento)
+        +registrarConsulta(id, servicioId, diagnostico, tratamiento)
+        +agendaDelDia(dia) List~TurnoDto~
+        +ingresosEntre(desde, hasta) BigDecimal
+    }

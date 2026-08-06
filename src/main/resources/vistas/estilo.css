@@ -1,0 +1,77 @@
+/* Estilos del Sistema de Gestion Veterinaria */
+
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 13px;
+}
+
+.fondo-principal {
+    -fx-background-color: #f4f6f8;
+}
+
+.vista {
+    -fx-background-color: #ffffff;
+}
+
+.menu {
+    -fx-background-color: #1f3b57;
+    -fx-padding: 20 12 20 12;
+}
+
+.menu-titulo {
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.menu-subtitulo {
+    -fx-text-fill: #9db4c8;
+    -fx-font-size: 12px;
+    -fx-padding: 0 0 12 0;
+}
+
+.menu-boton {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 8 12 8 12;
+    -fx-cursor: hand;
+}
+
+.menu-boton:hover {
+    -fx-background-color: #2c5282;
+}
+
+.titulo {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f3b57;
+}
+
+.barra-acciones {
+    -fx-padding: 12 0 0 0;
+}
+
+.boton-primario {
+    -fx-background-color: #2c5282;
+    -fx-text-fill: white;
+}
+
+.boton-primario:hover {
+    -fx-background-color: #1f3b57;
+}
+
+.total-ingresos {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f3b57;
+}
+
+.table-view {
+    -fx-background-color: white;
+}
+
+.table-view .column-header {
+    -fx-background-color: #e8edf2;
+    -fx-text-fill: #1f3b57;
+}

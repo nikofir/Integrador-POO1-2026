@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.veterinaria.controller.TurnoController" styleClass="vista">
+    <top>
+        <VBox spacing="10">
+            <Label styleClass="titulo" text="Turnos - agenda del dia"/>
+            <HBox spacing="10">
+                <DatePicker fx:id="campoDia" editable="false"/>
+                <Button text="Hoy" onAction="#recargar"/>
+            </HBox>
+        </VBox>
+    </top>
+    <center>
+        <TableView fx:id="tabla" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colHora" text="Hora"/>
+                <TableColumn fx:id="colMascota" text="Mascota"/>
+                <TableColumn fx:id="colCliente" text="Cliente"/>
+                <TableColumn fx:id="colVeterinario" text="Veterinario"/>
+                <TableColumn fx:id="colServicios" text="Servicios"/>
+                <TableColumn fx:id="colEstado" text="Estado"/>
+                <TableColumn fx:id="colTotal" text="Total"/>
+            </columns>
+        </TableView>
+    </center>
+    <bottom>
+        <HBox spacing="10" styleClass="barra-acciones">
+            <Button text="Nuevo turno" onAction="#nuevoTurno" styleClass="boton-primario"/>
+            <Button text="Confirmar" onAction="#confirmarTurno"/>
+            <Button text="Atender" onAction="#atenderTurno"/>
+            <Button text="Cancelar" onAction="#cancelarTurno"/>
+            <Button text="Registrar consulta" onAction="#registrarConsulta"/>
+        </HBox>
+    </bottom>
+    <padding>
+        <Insets top="16" right="16" bottom="16" left="16"/>
+    </padding>
+</BorderPane>
