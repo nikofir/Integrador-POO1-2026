@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.veterinaria.controller.AlertasVacunasController" styleClass="vista">
+    <top>
+        <VBox spacing="10">
+            <Label styleClass="titulo" text="Control de vacunaciones"/>
+            <HBox spacing="10">
+                <Button text="Recargar" onAction="#recargar" styleClass="boton-primario"/>
+                <Button text="Registrar vacunacion (Turnos)" onAction="#irATurnos"/>
+            </HBox>
+            <Label fx:id="resumen" styleClass="total-ingresos"/>
+            <Label text="Se muestran las vacunas vencidas o que vencen en los proximos 30 dias. Para registrar una vacunacion, cree un turno con el servicio de aplicacion de vacuna desde el modulo Turnos." styleClass="subtitulo"/>
+        </VBox>
+    </top>
+    <center>
+        <TableView fx:id="tabla" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colMascota" text="Mascota" prefWidth="160"/>
+                <TableColumn fx:id="colCliente" text="Cliente" prefWidth="150"/>
+                <TableColumn fx:id="colVacuna" text="Vacuna" prefWidth="140"/>
+                <TableColumn fx:id="colEnfermedad" text="Enfermedad" prefWidth="120"/>
+                <TableColumn fx:id="colUltima" text="Ultima aplicacion"/>
+                <TableColumn fx:id="colProxima" text="Proxima dosis"/>
+                <TableColumn fx:id="colEstado" text="Estado"/>
+                <TableColumn fx:id="colDias" text="Dias"/>
+            </columns>
+        </TableView>
+    </center>
+    <padding>
+        <Insets top="16" right="16" bottom="16" left="16"/>
+    </padding>
+</BorderPane>

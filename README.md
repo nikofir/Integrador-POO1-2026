@@ -4,8 +4,9 @@ Trabajo integrador de Programacion Orientada a Objetos (POO).
 
 Aplicacion de escritorio JavaFX para la gestion de una clinica veterinaria:
 clientes, mascotas, veterinarios, servicios (consultas, peluqueria, guarderia
-por dia y aplicacion de vacunas) y turnos, con persistencia real en
-PostgreSQL mediante JPA/Hibernate.
+por dia y aplicacion de vacunas), turnos, historial medico, control de
+vacunaciones e ingresos, con persistencia real en PostgreSQL mediante
+JPA/Hibernate.
 
 ## Requisitos
 
@@ -33,7 +34,7 @@ src/main/resources
 ├── database.properties   Configuracion de conexion (PostgreSQL en ejecucion)
 └── vistas/               Vistas FXML + hoja de estilos
 
-src/test/java/com/veterinaria   135 tests (dominio + persistencia + servicios)
+src/test/java/com/veterinaria   144 tests (dominio + persistencia + servicios)
 
 database/
 ├── crear_base_datos.sql   Crea la base veterinaria_db
@@ -81,7 +82,8 @@ mvn javafx:run
 ```
 
 La ventana principal ofrece un menu lateral con las secciones: Clientes,
-Mascotas, Veterinarios, Vacunas, Servicios, Turnos, Historial e Ingresos.
+Mascotas, Veterinarios, Vacunas, Servicios, Turnos, Historial, Vacunaciones
+e Ingresos.
 
 ## Arquitectura
 
@@ -107,6 +109,8 @@ El proyecto sigue una arquitectura en capas:
 - Un turno PENDIENTE se cancela cuando sea; uno CONFIRMADO solo con mas de
   24 hs de anticipacion.
 - El registro medico solo se carga en turnos ATENDIDOS.
+- El control de vacunaciones lista las mascotas con vacunas vencidas o que
+  vencen en los proximos 30 dias, desde su ultima aplicacion.
 
 ## Diagrama de clases
 

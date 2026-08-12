@@ -19,6 +19,7 @@
             <Button styleClass="menu-boton" text="Vacunas" maxWidth="Infinity" onAction="#mostrarVacunas"/>
             <Button styleClass="menu-boton" text="Turnos" maxWidth="Infinity" onAction="#mostrarTurnos"/>
             <Button styleClass="menu-boton" text="Historial" maxWidth="Infinity" onAction="#mostrarHistorial"/>
+            <Button styleClass="menu-boton" text="Vacunaciones" maxWidth="Infinity" onAction="#mostrarAlertasVacunas"/>
             <Button styleClass="menu-boton" text="Ingresos" maxWidth="Infinity" onAction="#mostrarIngresos"/>
         </VBox>
     </left>

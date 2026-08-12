@@ -143,6 +143,25 @@ public class TurnoRepository extends BaseRepository<Turno, Long> {
                 .setParameter("vacuna", vacunaId));
     }
 
+    /**
+     * Ultima fecha de aplicacion de cada vacuna por mascota (solo turnos
+     * atendidos). Devuelve filas {@code {mascotaId, vacunaId, ultimaFecha}}.
+     * Base de la pantalla de alertas de vacunacion.
+     */
+    public List<Object[]> ultimasAplicaciones(EntityManager em) {
+        return em.createQuery(
+                "SELECT t.mascota.id, v.id, MAX(t.fechaHora)"
+                        + " FROM Turno t"
+                        + " JOIN t.turnoServicios ts"
+                        + " JOIN ts.servicio s"
+                        + " JOIN TREAT(s AS AplicacionVacuna) av"
+                        + " JOIN av.vacuna v"
+                        + " WHERE t.estado = :estado"
+                        + " GROUP BY t.mascota.id, v.id", Object[].class)
+                .setParameter("estado", EstadoTurno.ATENDIDO)
+                .getResultList();
+    }
+
     /** Suma de los precios historicos de los turnos atendidos en el periodo. */
     public BigDecimal sumarIngresos(EntityManager em, LocalDateTime desde, LocalDateTime hasta) {
         return em.createQuery(

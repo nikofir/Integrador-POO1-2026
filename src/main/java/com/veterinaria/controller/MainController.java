@@ -51,6 +51,11 @@ public class MainController {
     }
 
     @FXML
+    private void mostrarAlertasVacunas() {
+        cargarVista("alertas_vacunas.fxml");
+    }
+
+    @FXML
     private void mostrarIngresos() {
         cargarVista("ingresos.fxml");
     }

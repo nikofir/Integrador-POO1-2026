@@ -64,12 +64,13 @@ de servicios** (`TurnoService`, etc.), dentro de una única transacción.
 
 **Implementadas**: clientes, mascotas (ficha automática, baja lógica),
 veterinarios, vacunas, servicios (4 tipos), turnos (agenda, confirmar/atender/
-cancelar, servicios, registro de consulta), historial médico por mascota,
-reporte de ingresos.
+cancelar, servicios, registro de consulta), historial médico por mascota con
+filtros por tipo de servicio y rango de fechas, reporte de ingresos y control
+de vacunaciones (alertas de vacunas vencidas o próximas a vencer en 30 días,
+calculadas desde la última aplicación en turnos atendidos mediante
+`Vacuna.proximaAplicacion` y `Vacuna.estadoAlerta`).
 
-**Pendientes (sugeridas, no obligatorias)**: pantalla de alertas de vacunas
-vencidas/próximas a vencer y filtros del historial por tipo de servicio o
-rango de fechas.
+**Pendientes (sugeridas, no obligatorias)**: ninguna.
 
 ### 6. Configuración de la base de datos externa
 

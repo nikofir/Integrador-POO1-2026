@@ -245,4 +245,44 @@ class TurnoServiceTest extends ServiceTestBase {
         assertEquals("Otitis", historial.get(0).turnoServicios().get(0).registroMedico().diagnostico());
         assertEquals(0, servicio.listarHistorial(999999L).size());
     }
+
+    private Long atenderTurno(Long servicioId, LocalDateTime fechaHora) {
+        TurnoDto turno = servicio.crearTurno(mascota, veterinario, fechaHora, List.of(servicioId));
+        servicio.confirmar(turno.id());
+        servicio.atender(turno.id());
+        return turno.id();
+    }
+
+    @Test
+    void historialFiltraPorTipoDeServicio() {
+        atenderTurno(consulta, futuro(2, 9));
+        atenderTurno(peluqueria, futuro(2, 11));
+
+        assertEquals(1, servicio.listarHistorial(mascota, "Consulta medica", null, null).size());
+        assertEquals(1, servicio.listarHistorial(mascota, "Peluqueria", null, null).size());
+        assertEquals(2, servicio.listarHistorial(mascota, null, null, null).size());
+        assertEquals(2, servicio.listarHistorial(mascota, "", null, null).size());
+    }
+
+    @Test
+    void historialFiltraPorRangoDeFechas() {
+        atenderTurno(consulta, futuro(2, 9));
+        atenderTurno(peluqueria, futuro(5, 10));
+
+        LocalDate hoy = LocalDate.now();
+        assertEquals(1, servicio.listarHistorial(mascota, null, hoy, hoy.plusDays(3)).size());
+        assertEquals(1, servicio.listarHistorial(mascota, null, hoy.plusDays(4), hoy.plusDays(10)).size());
+        assertEquals(0, servicio.listarHistorial(mascota, null, hoy.plusDays(10), hoy.plusDays(20)).size());
+    }
+
+    @Test
+    void historialCombinaTipoYRango() {
+        atenderTurno(consulta, futuro(2, 9));
+        atenderTurno(peluqueria, futuro(5, 10));
+
+        LocalDate hoy = LocalDate.now();
+        assertEquals(0, servicio.listarHistorial(mascota, "Consulta medica", hoy.plusDays(4), null).size());
+        assertEquals(1, servicio.listarHistorial(mascota, "Consulta medica", hoy, hoy.plusDays(3)).size());
+        assertEquals(0, servicio.listarHistorial(mascota, "Peluqueria", hoy, hoy.plusDays(3)).size());
+    }
 }

@@ -160,7 +160,7 @@ la mascota, cupo de guarderia y vigencia de vacunas, antes de persistir.
 
 - Interfaz FXML con un menu lateral (`MainController`) que carga las vistas en
   un `StackPane`: clientes, mascotas, veterinarios, vacunas, servicios, turnos,
-  historial e ingresos.
+  historial, vacunaciones e ingresos.
 - Cada vista tiene su controlador y sus DTOs; las operaciones de negocio se
   invocan contra los servicios dentro de un bloque que muestra los errores del
   dominio mediante dialogs (`Alertas`).
@@ -170,12 +170,13 @@ la mascota, cupo de guarderia y vigencia de vacunas, antes de persistir.
 
 ## 9. Pruebas
 
-La suite tiene **136 tests** organizados en tres niveles:
+La suite tiene **144 tests** organizados en tres niveles:
 
 1. **Dominio:** fabricas y validadores (datos validos, invalidos y limites).
 2. **Persistencia:** repositorios contra H2 en memoria (modo PostgreSQL).
 3. **Servicios:** reglas de negocio end-to-end (solapamientos, cupos,
-   vigencia de vacunas, transiciones de estado, ingresos).
+   vigencia de vacunas, transiciones de estado, ingresos, filtros del
+   historial, alertas de vacunacion).
 
 Los tests comparten una base H2 en memoria que se regenera por metodo,
 garantizando aislamiento y repetibilidad.
@@ -194,8 +195,12 @@ garantizando aislamiento y repetibilidad.
    Botones para confirmar, atender, cancelar y registrar consulta.
 7. **Historial:** desde el menu (o el boton *Ver historial* de Mascotas) se
    elige una mascota por ficha o nombre y se ven sus atenciones con
-   diagnostico y tratamiento.
-8. **Ingresos:** rango de fechas y total de turnos atendidos.
+   diagnostico y tratamiento. Admite filtros por tipo de servicio y por
+   rango de fechas (Desde/Hasta), con boton *Limpiar*.
+8. **Vacunaciones:** lista las mascotas con vacunas vencidas o que vencen en
+   los proximos 30 dias; el boton *Registrar vacunacion* lleva al modulo de
+   turnos para crear el turno con el servicio de aplicacion correspondiente.
+9. **Ingresos:** rango de fechas y total de turnos atendidos.
 
 ## 11. Limitaciones y mejoras futuras
 
@@ -205,4 +210,6 @@ garantizando aislamiento y repetibilidad.
 - El reporte de ingresos es simple; podria ampliarse con graficos y filtros
   por veterinario o servicio.
 - La numeracion de fichas asume reinicio anual; podria soportar configuracion.
-- Pueden incorporarse notificaciones de turnos y recordatorios de vacunas.
+- El control de vacunaciones lista vacunas vencidas o proximas a vencer; una
+  mejora seria notificaciones automaticas (email/calendario) de turnos y
+  vacunas.

@@ -66,6 +66,33 @@ public class Vacuna {
         return !fechaTurno.isAfter(fechaUltimaAplicacion.plusMonths(periodicidadMeses));
     }
 
+    /**
+     * Fecha en que debe reaplicarse la dosis aplicada en {@code ultimaAplicacion}
+     * (la aplicacion anterior mas la periodicidad en meses).
+     */
+    public LocalDate proximaAplicacion(LocalDate ultimaAplicacion) {
+        if (ultimaAplicacion == null) {
+            return null;
+        }
+        return ultimaAplicacion.plusMonths(periodicidadMeses);
+    }
+
+    /**
+     * Clasifica el estado de la dosis aplicada en {@code ultimaAplicacion}
+     * respecto de la fecha de referencia: VENCIDA, PROXIMA_A_VENCER (si vence
+     * dentro de los proximos {@code diasAlerta}) o AL_DIA.
+     */
+    public EstadoVacuna estadoAlerta(LocalDate ultimaAplicacion, LocalDate referencia, long diasAlerta) {
+        LocalDate proxima = proximaAplicacion(ultimaAplicacion);
+        if (proxima.isBefore(referencia)) {
+            return EstadoVacuna.VENCIDA;
+        }
+        if (!proxima.isAfter(referencia.plusDays(diasAlerta))) {
+            return EstadoVacuna.PROXIMA_A_VENCER;
+        }
+        return EstadoVacuna.AL_DIA;
+    }
+
     public Long getId() {
         return id;
     }

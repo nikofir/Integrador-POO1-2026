@@ -134,6 +134,33 @@ public class TurnoService {
     }
 
     /**
+     * Historial medico filtrado por tipo de servicio (etiqueta de
+     * {@code TurnoServicioDto#servicioTipo()}) y/o rango de fechas (inclusivo).
+     * Un filtro {@code null} o vacio significa "sin filtro".
+     */
+    public List<TurnoDto> listarHistorial(Long mascotaId, String tipoServicio, LocalDate desde,
+                                          LocalDate hasta) {
+        return listarHistorial(mascotaId).stream()
+                .filter(turno -> incluyeTipo(turno, tipoServicio))
+                .filter(turno -> estaEnRango(turno, desde, hasta))
+                .toList();
+    }
+
+    private boolean incluyeTipo(TurnoDto turno, String tipoServicio) {
+        if (tipoServicio == null || tipoServicio.isBlank()) {
+            return true;
+        }
+        return turno.turnoServicios().stream()
+                .anyMatch(ts -> tipoServicio.equals(ts.servicioTipo()));
+    }
+
+    private boolean estaEnRango(TurnoDto turno, LocalDate desde, LocalDate hasta) {
+        LocalDate fecha = turno.fechaHora().toLocalDate();
+        return (desde == null || !fecha.isBefore(desde))
+                && (hasta == null || !fecha.isAfter(hasta));
+    }
+
+    /**
      * Agrega un servicio a un turno existente, revalidando las reglas de agenda.
      */
     public TurnoDto agregarServicio(Long turnoId, Long servicioId) {

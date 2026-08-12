@@ -104,6 +104,20 @@ INSERT INTO turno_servicios (id, turno_id, servicio_id, precio_historico, regist
 ON CONFLICT (id) DO NOTHING;
 
 -- ------------------------------------------------------------------
+-- Turno 9 (demo alertas de vacunacion): vacunacion ATENDIDA hace
+-- ~11 meses y 10 dias (Rocky). Nobivac Rabia es anual (12 meses),
+-- por lo que la proxima dosis vence dentro de los proximos 30 dias
+-- y la pantalla "Vacunaciones" la muestra como "Vence en breve".
+-- ------------------------------------------------------------------
+INSERT INTO turnos (id, mascota_id, veterinario_id, estado, fecha_hora, fecha_creacion) VALUES
+    (9, 1, 1, 'ATENDIDO', ((now() - interval '11 months 10 days')::date + time '10:00'), now() - interval '11 months 11 days')
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO turno_servicios (id, turno_id, servicio_id, precio_historico, registro_medico_id) VALUES
+    (9, 9, 5, 9000.00, NULL)
+ON CONFLICT (id) DO NOTHING;
+
+-- ------------------------------------------------------------------
 -- Reajuste de secuencias (columnas de identidad)
 -- ------------------------------------------------------------------
 SELECT setval(pg_get_serial_sequence('vacunas', 'id'),               GREATEST((SELECT COALESCE(MAX(id), 0) FROM vacunas),               1));

@@ -11,12 +11,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,6 +32,8 @@ public class HistorialController {
 
     private static final DateTimeFormatter FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     private static final String SIN_REGISTRO = "-";
+    private static final List<String> TIPOS_SERVICIO = List.of(
+            "Consulta medica", "Peluqueria", "Guarderia por dia", "Aplicacion de vacuna");
 
     private final MascotaService servicioMascotas = new MascotaService();
     private final TurnoService servicioTurnos = new TurnoService();
@@ -40,6 +44,12 @@ public class HistorialController {
     private TextField campoBusqueda;
     @FXML
     private Label etiquetaMascota;
+    @FXML
+    private ComboBox<String> comboTipo;
+    @FXML
+    private DatePicker fechaDesde;
+    @FXML
+    private DatePicker fechaHasta;
     @FXML
     private TableView<TurnoDto> tabla;
     @FXML
@@ -71,6 +81,10 @@ public class HistorialController {
                         .collect(Collectors.joining(", "))));
         colDiagnostico.setCellValueFactory(c -> new SimpleStringProperty(diagnosticos(c.getValue())));
         colTratamiento.setCellValueFactory(c -> new SimpleStringProperty(tratamientos(c.getValue())));
+
+        comboTipo.getItems().add("Todos");
+        comboTipo.getItems().addAll(TIPOS_SERVICIO);
+        comboTipo.setValue("Todos");
 
         comboMascota.setItems(FXCollections.observableArrayList(servicioMascotas.listarTodas()));
         comboMascota.setCellFactory(c -> celda());
@@ -118,8 +132,23 @@ public class HistorialController {
         }
         etiquetaMascota.setText("Historial de " + mascota.nombre()
                 + " (" + mascota.ficha() + " - " + mascota.clienteNombreCompleto() + ")");
-        datos.setAll(servicioTurnos.listarHistorial(mascota.id()));
+        String tipo = "Todos".equals(comboTipo.getValue()) ? null : comboTipo.getValue();
+        datos.setAll(servicioTurnos.listarHistorial(mascota.id(), tipo,
+                fechaDesde.getValue(), fechaHasta.getValue()));
         tabla.setItems(datos);
+    }
+
+    @FXML
+    private void filtrar() {
+        consultar();
+    }
+
+    @FXML
+    private void limpiarFiltros() {
+        comboTipo.setValue("Todos");
+        fechaDesde.setValue(null);
+        fechaHasta.setValue(null);
+        consultar();
     }
 
     private String diagnosticos(TurnoDto turno) {

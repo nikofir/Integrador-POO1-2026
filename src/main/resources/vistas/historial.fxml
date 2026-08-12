@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -21,6 +22,16 @@
                 <Button text="Buscar" onAction="#buscar" styleClass="boton-primario"/>
                 <Label text="Mascota:"/>
                 <ComboBox fx:id="comboMascota" prefWidth="340"/>
+            </HBox>
+            <HBox spacing="10">
+                <Label text="Tipo de servicio:"/>
+                <ComboBox fx:id="comboTipo" prefWidth="180"/>
+                <Label text="Desde:"/>
+                <DatePicker fx:id="fechaDesde" prefWidth="140"/>
+                <Label text="Hasta:"/>
+                <DatePicker fx:id="fechaHasta" prefWidth="140"/>
+                <Button text="Filtrar" onAction="#filtrar" styleClass="boton-primario"/>
+                <Button text="Limpiar" onAction="#limpiarFiltros"/>
             </HBox>
             <Label fx:id="etiquetaMascota" styleClass="total-ingresos"/>
         </VBox>
