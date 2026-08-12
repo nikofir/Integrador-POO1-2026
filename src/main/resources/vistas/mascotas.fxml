@@ -39,6 +39,7 @@
             <Button text="Nueva mascota" onAction="#nuevaMascota" styleClass="boton-primario"/>
             <Button text="Modificar" onAction="#modificarMascota"/>
             <Button text="Activar / Inactivar" onAction="#alternarEstado"/>
+            <Button text="Ver historial" onAction="#verHistorial"/>
         </HBox>
     </bottom>
     <padding>

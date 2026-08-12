@@ -36,7 +36,7 @@ class MascotaRepositoryTest extends PersistenciaBaseTest {
             return null;
         });
 
-        Mascota recuperada = enTransaccion(em -> repositorio.buscarPorFicha(em, "M-2026-0001"));
+        Mascota recuperada = enTransaccion(em -> repositorio.buscarPorFicha(em, "M-2026-0001").orElseThrow());
         assertNotNull(recuperada);
         assertEquals("Rex", recuperada.getNombre());
         assertEquals(cliente.getId(), recuperada.getCliente().getId());
@@ -108,7 +108,7 @@ class MascotaRepositoryTest extends PersistenciaBaseTest {
         boolean enActivas = enTransaccion(em -> repositorio.listarActivas(em).contains(mascota));
         assertFalse(enActivas);
 
-        Mascota recuperada = enTransaccion(em -> repositorio.buscarPorFicha(em, "M-2026-0001"));
+        Mascota recuperada = enTransaccion(em -> repositorio.buscarPorFicha(em, "M-2026-0001").orElseThrow());
         assertFalse(recuperada.isActiva());
     }
 }

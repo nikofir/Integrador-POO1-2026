@@ -10,6 +10,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.StackPane;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
@@ -23,6 +25,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.layout.GridPane;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -118,6 +121,25 @@ public class MascotaController {
             recargar();
         } catch (RuntimeException e) {
             Alertas.mostrarExcepcion(e);
+        }
+    }
+
+    @FXML
+    private void verHistorial() {
+        MascotaDto seleccionada = tabla.getSelectionModel().getSelectedItem();
+        if (seleccionada == null) {
+            return;
+        }
+        try {
+            FXMLLoader cargador = new FXMLLoader(getClass().getResource("/vistas/historial.fxml"));
+            javafx.scene.Node vista = cargador.load();
+            HistorialController control = cargador.getController();
+            control.mostrarHistorialDe(seleccionada);
+            StackPane contenedor = (StackPane) tabla.getScene().lookup("#contenido");
+            contenedor.getChildren().clear();
+            contenedor.getChildren().add(vista);
+        } catch (IOException e) {
+            Alertas.error("Error de interfaz", "No se pudo abrir el historial medico.");
         }
     }
 

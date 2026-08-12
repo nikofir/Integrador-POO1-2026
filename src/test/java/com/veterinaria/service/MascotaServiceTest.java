@@ -94,9 +94,10 @@ class MascotaServiceTest extends ServiceTestBase {
         Long clienteId = crearCliente();
         MascotaDto creada = registrarMascota(clienteId);
 
-        MascotaDto encontrada = servicio.buscarPorFicha(creada.ficha());
+        MascotaDto encontrada = servicio.buscarPorFicha(creada.ficha()).orElseThrow();
         assertNotNull(encontrada);
         assertEquals(creada.id(), encontrada.id());
         assertEquals(clienteId, encontrada.clienteId());
+        assertTrue(servicio.buscarPorFicha("M-2099-9999").isEmpty());
     }
 }

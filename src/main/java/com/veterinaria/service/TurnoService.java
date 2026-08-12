@@ -125,6 +125,15 @@ public class TurnoService {
     }
 
     /**
+     * Historial medico de una mascota: turnos ATENDIDOS ordenados
+     * cronologicamente, con servicios, registro medico y veterinario.
+     */
+    public List<TurnoDto> listarHistorial(Long mascotaId) {
+        return JpaUtil.enTransaccion(em ->
+                repositorio.listarHistorial(em, mascotaId).stream().map(TurnoDto::desde).toList());
+    }
+
+    /**
      * Agrega un servicio a un turno existente, revalidando las reglas de agenda.
      */
     public TurnoDto agregarServicio(Long turnoId, Long servicioId) {

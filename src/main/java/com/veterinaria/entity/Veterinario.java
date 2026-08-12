@@ -9,6 +9,7 @@ import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -42,7 +43,7 @@ public class Veterinario {
     @Column(nullable = false, length = 60)
     private String apellido;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "veterinario_especialidades", joinColumns = @JoinColumn(name = "veterinario_id"))
     @Enumerated(EnumType.STRING)
     @Column(name = "especialidad", nullable = false, length = 30)

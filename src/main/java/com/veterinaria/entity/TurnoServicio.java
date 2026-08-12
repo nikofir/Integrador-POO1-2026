@@ -4,6 +4,7 @@ import com.veterinaria.exception.EntidadInvalidaException;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,18 +28,18 @@ public class TurnoServicio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "turno_id", nullable = false)
     private Turno turno;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "servicio_id", nullable = false)
     private Servicio servicio;
 
     @Column(name = "precio_historico", nullable = false, precision = 10, scale = 2)
     private BigDecimal precioHistorico;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "registro_medico_id")
     private RegistroMedico registroMedico;
 

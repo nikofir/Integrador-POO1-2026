@@ -4,6 +4,7 @@ import com.veterinaria.entity.Mascota;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Acceso a datos de mascotas.
@@ -15,10 +16,10 @@ public class MascotaRepository extends BaseRepository<Mascota, Long> {
     }
 
     /** Busca una mascota por su ficha unica. */
-    public Mascota buscarPorFicha(EntityManager em, String ficha) {
-        return resultadoUnico(em.createQuery(
+    public Optional<Mascota> buscarPorFicha(EntityManager em, String ficha) {
+        return Optional.ofNullable(resultadoUnico(em.createQuery(
                 "SELECT m FROM Mascota m WHERE m.ficha = :ficha", Mascota.class)
-                .setParameter("ficha", ficha));
+                .setParameter("ficha", ficha)));
     }
 
     /** Lista mascotas de un cliente. */
@@ -34,6 +35,14 @@ public class MascotaRepository extends BaseRepository<Mascota, Long> {
     public List<Mascota> listarActivas(EntityManager em) {
         return em.createQuery(
                 "SELECT m FROM Mascota m JOIN FETCH m.cliente WHERE m.activa = true ORDER BY m.nombre",
+                Mascota.class)
+                .getResultList();
+    }
+
+    /** Lista todas las mascotas (activas e inactivas) con su cliente, por ficha. */
+    public List<Mascota> listarTodas(EntityManager em) {
+        return em.createQuery(
+                "SELECT m FROM Mascota m JOIN FETCH m.cliente ORDER BY m.ficha",
                 Mascota.class)
                 .getResultList();
     }

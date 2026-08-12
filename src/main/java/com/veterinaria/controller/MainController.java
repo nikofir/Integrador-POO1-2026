@@ -46,6 +46,11 @@ public class MainController {
     }
 
     @FXML
+    private void mostrarHistorial() {
+        cargarVista("historial.fxml");
+    }
+
+    @FXML
     private void mostrarIngresos() {
         cargarVista("ingresos.fxml");
     }

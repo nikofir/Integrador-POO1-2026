@@ -81,7 +81,7 @@ mvn javafx:run
 ```
 
 La ventana principal ofrece un menu lateral con las secciones: Clientes,
-Mascotas, Veterinarios, Vacunas, Servicios, Turnos e Ingresos.
+Mascotas, Veterinarios, Vacunas, Servicios, Turnos, Historial e Ingresos.
 
 ## Arquitectura
 
@@ -113,7 +113,8 @@ El proyecto sigue una arquitectura en capas:
 Ver `docs/diagrama_clases.mmd` (Mermaid). Puede renderizarse en
 [mermaid.live](https://mermaid.live) o con la extension Mermaid del editor.
 
-## Memoria del trabajo
+## Entregables academicos
 
-La documentacion academica (decisiones, clases, reglas, manual de usuario)
-esta en `docs/memoria.md`.
+- `docs/diagrama_clases.mmd`: diagrama de clases UML.
+- `docs/decisiones_diseno.md`: documento de decisiones de diseno (max. 2 paginas).
+- `docs/memoria.md`: memoria del trabajo (arquitectura, reglas, pruebas, manual).

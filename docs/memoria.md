@@ -28,6 +28,9 @@ persistencia y una interfaz grafica.
   referencia una vacuna del catalogo.
 - **Turnos:** reserva, confirmacion, atencion, cancelacion, alta de servicios
   adicionales y carga de registros medicos sobre turnos atendidos.
+- **Historial medico:** consulta del historial completo de una mascota (turnos
+  atendidos ordenados cronologicamente, servicios, veterinario, diagnostico,
+  tratamiento y vacunas), buscable por ficha o nombre.
 - **Reporte de ingresos:** suma de los turnos atendidos en un rango de fechas.
 
 ## 3. Arquitectura en capas
@@ -156,8 +159,8 @@ la mascota, cupo de guarderia y vigencia de vacunas, antes de persistir.
 ## 8. Presentacion (JavaFX)
 
 - Interfaz FXML con un menu lateral (`MainController`) que carga las vistas en
-  un `StackPane`: clientes, mascotas, veterinarios, vacunas, servicios, turnos
-  e ingresos.
+  un `StackPane`: clientes, mascotas, veterinarios, vacunas, servicios, turnos,
+  historial e ingresos.
 - Cada vista tiene su controlador y sus DTOs; las operaciones de negocio se
   invocan contra los servicios dentro de un bloque que muestra los errores del
   dominio mediante dialogs (`Alertas`).
@@ -167,7 +170,7 @@ la mascota, cupo de guarderia y vigencia de vacunas, antes de persistir.
 
 ## 9. Pruebas
 
-La suite tiene **135 tests** organizados en tres niveles:
+La suite tiene **136 tests** organizados en tres niveles:
 
 1. **Dominio:** fabricas y validadores (datos validos, invalidos y limites).
 2. **Persistencia:** repositorios contra H2 en memoria (modo PostgreSQL).
@@ -189,7 +192,10 @@ garantizando aislamiento y repetibilidad.
    vacunas la vacuna asociada.
 6. **Turnos:** se selecciona dia, mascota, veterinario y uno o mas servicios.
    Botones para confirmar, atender, cancelar y registrar consulta.
-7. **Ingresos:** rango de fechas y total de turnos atendidos.
+7. **Historial:** desde el menu (o el boton *Ver historial* de Mascotas) se
+   elige una mascota por ficha o nombre y se ven sus atenciones con
+   diagnostico y tratamiento.
+8. **Ingresos:** rango de fechas y total de turnos atendidos.
 
 ## 11. Limitaciones y mejoras futuras
 

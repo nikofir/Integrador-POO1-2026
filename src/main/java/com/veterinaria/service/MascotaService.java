@@ -11,6 +11,7 @@ import com.veterinaria.util.JpaUtil;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Casos de uso sobre mascotas: alta con ficha generada por el sistema,
@@ -57,13 +58,13 @@ public class MascotaService {
     }
 
     /**
-     * Busca por ficha. Devuelve {@code null} si no existe.
+     * Busca por ficha.
+     *
+     * @return {@code Optional} con la mascota si existe, vacio en caso contrario
      */
-    public MascotaDto buscarPorFicha(String ficha) {
-        return JpaUtil.enTransaccion(em -> {
-            Mascota mascota = repositorio.buscarPorFicha(em, ficha);
-            return mascota == null ? null : MascotaDto.desde(mascota);
-        });
+    public Optional<MascotaDto> buscarPorFicha(String ficha) {
+        return JpaUtil.enTransaccion(em ->
+                repositorio.buscarPorFicha(em, ficha).map(MascotaDto::desde));
     }
 
     public List<MascotaDto> listarActivas() {
@@ -74,6 +75,12 @@ public class MascotaService {
     public List<MascotaDto> listarPorCliente(Long clienteId) {
         return JpaUtil.enTransaccion(em ->
                 repositorio.listarPorCliente(em, clienteId).stream().map(MascotaDto::desde).toList());
+    }
+
+    /** Lista todas las mascotas (activas e inactivas), para el historial medico. */
+    public List<MascotaDto> listarTodas() {
+        return JpaUtil.enTransaccion(em ->
+                repositorio.listarTodas(em).stream().map(MascotaDto::desde).toList());
     }
 
     /** Baja logica: la mascota deja de poder tomar turnos. */

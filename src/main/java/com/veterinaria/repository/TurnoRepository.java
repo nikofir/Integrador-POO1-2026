@@ -52,6 +52,24 @@ public class TurnoRepository extends BaseRepository<Turno, Long> {
                 .getResultList();
     }
 
+    /**
+     * Historial medico de una mascota: sus turnos ATENDIDOS ordenados
+     * cronologicamente, con servicios, registro medico y veterinario.
+     */
+    public List<Turno> listarHistorial(EntityManager em, Long mascotaId) {
+        return em.createQuery(
+                "SELECT DISTINCT t FROM Turno t"
+                        + " LEFT JOIN FETCH t.mascota m LEFT JOIN FETCH m.cliente"
+                        + " LEFT JOIN FETCH t.veterinario"
+                        + " LEFT JOIN FETCH t.turnoServicios ts LEFT JOIN FETCH ts.servicio"
+                        + " LEFT JOIN FETCH ts.registroMedico"
+                        + " WHERE t.mascota.id = :mascota AND t.estado = :estado"
+                        + " ORDER BY t.fechaHora", Turno.class)
+                .setParameter("mascota", mascotaId)
+                .setParameter("estado", EstadoTurno.ATENDIDO)
+                .getResultList();
+    }
+
     /** Lista los turnos de un dia (agenda), ordenados por hora. */
     public List<Turno> listarPorDia(EntityManager em, LocalDate dia) {
         return em.createQuery(

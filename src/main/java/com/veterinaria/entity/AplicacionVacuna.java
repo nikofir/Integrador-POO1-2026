@@ -3,6 +3,7 @@ package com.veterinaria.entity;
 import com.veterinaria.exception.EntidadInvalidaException;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
@@ -19,7 +20,7 @@ public class AplicacionVacuna extends Servicio {
 
     // Nulable en la tabla: con herencia SINGLE_TABLE las otras subclases
     // dejan esta columna en NULL.
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "vacuna_id")
     private Vacuna vacuna;
 

@@ -228,4 +228,21 @@ class TurnoServiceTest extends ServiceTestBase {
         assertEquals(2, servicio.listarPorDia(dia.toLocalDate()).size());
         assertEquals(0, servicio.listarPorDia(dia.toLocalDate().plusDays(10)).size());
     }
+
+    @Test
+    void historialSoloMuestraTurnosAtendidosConRegistro() {
+        TurnoDto atendido = servicio.crearTurno(mascota, veterinario, futuro(2, 9), List.of(consulta));
+        servicio.confirmar(atendido.id());
+        TurnoDto atendidoDto = servicio.atender(atendido.id());
+        Long detalleId = atendidoDto.turnoServicios().get(0).id();
+        servicio.registrarConsulta(atendido.id(), detalleId, "Otitis", "Antibioticos");
+
+        servicio.crearTurno(mascota, veterinario, futuro(3, 10), List.of(consulta));
+
+        List<TurnoDto> historial = servicio.listarHistorial(mascota);
+        assertEquals(1, historial.size());
+        assertEquals("Atendido", historial.get(0).estado());
+        assertEquals("Otitis", historial.get(0).turnoServicios().get(0).registroMedico().diagnostico());
+        assertEquals(0, servicio.listarHistorial(999999L).size());
+    }
 }
